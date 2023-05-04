@@ -20,9 +20,22 @@ pipeline {
 
       }
     }
+       stage('Check SBOM') {
+            steps {
+                
+                   dependencyCheck(
+    projectName: 'StestSbom',
+    scanPath: '/var/lib/jenkins/workspace/test_main/',
+    outputFormat: 'XML',
+    outputFile: 'target/bom.xml'
+)
+
+            }
+        }
             stage('Create SBOM') {
             steps {
-                    dependencyTrackPublisher artifact: 'target/springboot-restful-webservices-0.0.1-SNAPSHOT.jar', projectName: 'StestSbom', projectVersion: '02', synchronous: true
+                sh'ls -l target/'
+                    dependencyTrackPublisher artifact: 'target/bom.xml', projectName: 'StestSbom', projectVersion: '02', synchronous: true
                 
             }
         }
