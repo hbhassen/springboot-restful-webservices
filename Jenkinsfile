@@ -22,14 +22,8 @@ pipeline {
     }
        stage('Check SBOM') {
             steps {
-                
-                   dependencyCheck(
-    projectName: 'StestSbom',
-    scanPath: '/var/lib/jenkins/workspace/test_main/',
-    outputFormat: 'XML',
-    outputFile: 'target/bom.xml'
-)
-
+                sh 'dependency-check.sh --project "StestSbom" --scan /var/lib/jenkins/workspace/test_main/ --format "XML" --out target/bom.xml'
+                   
             }
         }
             stage('Create SBOM') {
