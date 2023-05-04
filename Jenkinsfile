@@ -22,7 +22,7 @@ pipeline {
     }
             stage('Create SBOM') {
             steps {
-                    dependencyTrackPublisher artifact: 'pom.xml', projectName: 'SignBioBackend', projectVersion: '02', synchronous: true
+                    dependencyTrackPublisher artifact: 'target/springboot-restful-webservices-0.0.1-SNAPSHOT.jar', projectName: 'StestSbom', projectVersion: '02', synchronous: true
                 
             }
         }
