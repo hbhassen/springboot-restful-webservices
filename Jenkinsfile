@@ -20,16 +20,11 @@ pipeline {
 
       }
     }
-       stage('Check SBOM') {
-            steps {
-                sh 'dependency-check.sh --project "StestSbom" --scan /var/lib/jenkins/workspace/test_main/ --format "XML" --out target/bom.xml'
-                   
-            }
-        }
+       
             stage('Create SBOM') {
             steps {
                 sh'ls -l target/'
-                    dependencyTrackPublisher artifact: 'target/bom.xml', projectName: 'StestSbom', projectVersion: '02', synchronous: true
+                    dependencyTrackPublisher artifact: 'bom.xml', projectName: 'NomDuProjet', projectVersion: '02', synchronous: true
                 
             }
         }
