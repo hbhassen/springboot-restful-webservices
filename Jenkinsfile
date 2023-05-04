@@ -24,7 +24,7 @@ pipeline {
             stage('Create SBOM') {
             steps {
                 sh'ls -l target/'
-                    dependencyTrackPublisher artifact: 'bom.xml', projectName: 'NomDuProjet', projectVersion: '02', synchronous: true
+                    dependencyTrackPublisher artifact: 'bom.json', projectName: 'NomDuProjet1', projectVersion: '02', synchronous: true
                 
             }
         }
