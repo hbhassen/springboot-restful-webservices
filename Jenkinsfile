@@ -24,7 +24,7 @@ pipeline {
             stage('Create SBOM') {
             steps {
                 sh'ls -l target/'
-                    dependencyTrackPublisher artifact: 'CycloneDX-Sbom.xml', projectName: 'projet-spring-rest', projectVersion: '02', synchronous: true
+                    dependencyTrackPublisher artifact: 'target/CycloneDX-Sbom.xml', projectName: 'projet-spring-rest', projectVersion: '02', synchronous: true
                 
             }
         }
