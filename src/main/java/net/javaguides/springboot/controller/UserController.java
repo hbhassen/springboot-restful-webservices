@@ -1,6 +1,6 @@
 package net.javaguides.springboot.controller;
 
-//import jakarta.validation.Valid;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import net.javaguides.springboot.dto.UserDto;
 import net.javaguides.springboot.entity.User;
@@ -14,8 +14,6 @@ import org.springframework.web.context.request.WebRequest;
 
 import java.time.LocalDateTime;
 import java.util.List;
-
-import javax.validation.Valid;
 
 @RestController
 @AllArgsConstructor
