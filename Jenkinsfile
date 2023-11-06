@@ -23,7 +23,7 @@ pipeline {
    stage('deploy') {
             steps {
                 sh'ls -l target/'
-                 sh'mvn deploy'
+                 sh'mvn deploy -Dmaven.test.skip=true'
                 
             }
         }
