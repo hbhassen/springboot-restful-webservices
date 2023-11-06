@@ -24,12 +24,43 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import lombok.extern.slf4j.Slf4j;
 import net.javaguides.springboot.dto.BOMDTO;
+import net.javaguides.springboot.dto.dependencyDTO;
 
 @Service
 @Slf4j
 public class MyService {
     @Autowired
     private RestTemplate restTemplate;
+    
+
+    public void dependencyDetails() throws IOException {
+    	ObjectMapper objectMapper = new ObjectMapper();
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.set("Authorization", "Basic dGVzdHByb2R1aXQ2M0BnbWFpbC5jb206TWF6ZW5NZWQrMjAyNCsq");
+
+        String url = "https://testproduit.jfrog.io/xray/api/v1/dependencyGraph/artifact";
+
+        // Construire le corps de la requête selon la structure donnée
+        String requestBody = "{\n"
+        		+ "  \"path\": \"artifactory/libs-snapshot-local/net/javaguides/springboot-restful-webservices/0.0.1-SNAPSHOT/springboot-restful-webservices-0.0.1-20231105.224433-1.jar\"\n"
+        		+ "}";
+
+        HttpEntity<String> requestEntity = new HttpEntity<>(requestBody, headers);
+
+        // Effectuer la requête POST
+        ResponseEntity<dependencyDTO> responseEntity = restTemplate.exchange(url, HttpMethod.POST, requestEntity, dependencyDTO.class);
+
+        // Gérer la réponse, par exemple, l'enregistrer dans un fichier
+        if (responseEntity.getStatusCode() == HttpStatus.OK) {
+        	dependencyDTO responseBody = responseEntity.getBody();
+        	log.info(responseBody.toString());
+           
+        } else {
+            System.out.println("Request failed with status code: " + responseEntity.getStatusCode());
+        }
+    }
+   
 
     public void exportComponentDetails() throws IOException {
     	ObjectMapper objectMapper = new ObjectMapper();
@@ -57,9 +88,20 @@ public class MyService {
             log.info(data.getBomFormat());
             log.info(data.getMetadata().getComponent().getName());
             log.info(data.getMetadata().getComponent().getType());
-            log.info(data.getMetadata().getComponent().getBomRef());
             log.info(data.getMetadata().getComponent().getVersion());
-            log.info(data.getComponents().toString());
+            data.getComponents().forEach(x->{
+            	log.info("bom-ref:"+x.getBomRef());
+                log.info("name:"+x.getName());
+                log.info("type:"+x.getType());
+                log.info("version"+x.getVersion());
+                x.getLicenses().forEach(y->{
+                   log.info("licences id:"+	y.getLicense().getId());
+                   log.info("licences name:"+	y.getLicense().getName());
+                   log.info("licences url:"+	y.getLicense().getUrl());
+                	
+                });
+            	
+            });
             // Spécifiez le chemin du fichier où vous souhaitez enregistrer la réponse
             String filePath = "response.json";
 
@@ -73,6 +115,7 @@ public class MyService {
             System.out.println("Request failed with status code: " + responseEntity.getStatusCode());
         }
     }
+   
     public  byte[] extractFileFromZip(InputStream zipInputByte) throws IOException {
         try (ZipInputStream zipInputStream = new ZipInputStream(zipInputByte)) {
             ZipEntry entry;

@@ -34,7 +34,8 @@ public class SpringbootRestfulWebservicesApplication implements CommandLineRunne
 	@Override
 	public void run(String... args) throws Exception {
 		// TODO Auto-generated method stub
-		myService.exportComponentDetails();
+		//myService.exportComponentDetails();
+		myService.dependencyDetails();
 		
 	}
 
