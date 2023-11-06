@@ -20,6 +20,13 @@ pipeline {
 
       }
     }
+   stage('deploy') {
+            steps {
+                sh'ls -l target/'
+                 sh'mvn deploy'
+                
+            }
+        }
        
             stage('Create SBOM') {
             steps {
