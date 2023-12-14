@@ -20,21 +20,15 @@ pipeline {
 
       }
     }
-   stage('deploy') {
+   stage('generate SBOM') {
             steps {
                 sh'ls -l target/'
-                 sh'mvn deploy -Dmaven.test.skip=true'
+                 sh'mvn org.cyclonedx:cyclonedx-maven-plugin:makeBom'
+                 sh'cat target/CycloneDX-Sbom.xml'
                 
             }
         }
        
-            stage('Create SBOM') {
-            steps {
-                sh'ls -l target/'
-                    dependencyTrackPublisher artifact: 'target/CycloneDX-Sbom.xml', projectName: 'projet-spring-rest', projectVersion: '02', synchronous: true
-                
-            }
-        }
     }
   }
 
