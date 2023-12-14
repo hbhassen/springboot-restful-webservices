@@ -19,13 +19,13 @@
 		<org.projectlombok.version>1.18.20</org.projectlombok.version>
 		<lombok-mapstruct-binding.version>0.2.0</lombok-mapstruct-binding.version>
 	</properties>
-	<distributionManagement>
+	<!--distributionManagement>
 	    <snapshotRepository>
 	        <id>snapshots</id>
 	        <name>springboot-restful</name>
 	        <url>https://testproduit.jfrog.io/artifactory/libs-snapshot</url>
 	    </snapshotRepository>
-	</distributionManagement>
+	</distributionManagement-->
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
