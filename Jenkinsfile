@@ -14,6 +14,7 @@ pipeline {
           echo 'hi'
           sh'pwd'
           sh'ls -l'
+          sh'java -version'
           sh 'mvn clean install -Dmaven.test.skip=true'
 
           
